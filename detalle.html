@@ -23,20 +23,19 @@
         <p class="text-muted small mb-0">Chile Clima APP - Proyecto Académico</p>
     </footer>
 
-    <script src="js/data.js"></script>
+    <script src="js/datos.js"></script>
 
     <script>
         // Capturamos el ID de la URL
         const parametros = new URLSearchParams(window.location.search);
         const idSeleccionado = parseInt(parametros.get('id'));
 
-        // Buscamos la ciudad en el arreglo 'ciudades' de data.js
+        // Buscamos la ciudad en el arreglo 'ciudades' que viene de datos.js
         const ciudad = ciudades.find(c => c.id === idSeleccionado);
 
         const contenedor = document.getElementById('pantalla-detalle');
 
         if (ciudad) {
-            
             contenedor.innerHTML = `
                 <div class="col-md-8 col-lg-6">
                     <div class="card p-4 shadow border-0 text-center">
@@ -59,11 +58,11 @@
                     </div>
                 </div>`;
         } else {
-            
             contenedor.innerHTML = `
-                <div class="alert alert-warning text-center">
+                <div class="alert alert-warning text-center shadow-sm">
                     <h3>Ciudad no encontrada</h3>
-                    <a href="index.html" class="btn btn-dark mt-3">Regresar</a>
+                    <p>No pudimos encontrar la información para esta ubicación.</p>
+                    <a href="index.html" class="btn btn-dark mt-3">Regresar al Inicio</a>
                 </div>`;
         }
     </script>

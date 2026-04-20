@@ -3,27 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chile Clima APP | Inicio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <title>ChileClima | Módulo 3</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body>
-    <nav class="navbar navbar-dark bg-primary shadow mb-4">
-        <div class="container">
-            <span class="navbar-brand fw-bold">☀️ Chile Clima APP</span>
-        </div>
-    </nav>
+<body class="weather-app">
 
-    <main class="container">
-        <h1 class="text-center mb-4">Clima Regional Chile</h1>
-        <div class="row row-cols-1 row-cols-md-3 g-4" id="contenedor-ciudades"></div>
+    <header class="weather-app__header">
+        <nav class="navbar navbar-dark container">
+            <a class="navbar-brand fw-bold" href="index.html">🌤️ CHILECLIMA</a>
+        </nav>
+    </header>
+
+    <main class="weather-app__content container">
+        <div class="text-center mb-5">
+            <h1 class="font-weight-bold">Estado del Tiempo</h1>
+            <p class="text-muted">Refactorización SASS + BEM</p>
+        </div>
+
+        <div class="row" id="contenedor-ciudades"></div>
     </main>
 
-    <footer class="text-center py-4 mt-5 bg-dark text-white">
-        <p class="mb-0 small">Chile Clima APP - Proyecto Formativo M2</p>
+    <footer class="weather-app__footer text-center">
+        <div class="container">
+            <p class="mb-0">Proyecto ChileClima - Módulo 3</p>
+            <small>Desarrollado por [Priscilla Milla Carreño] - 2026</small>
+        </div>
     </footer>
 
     <script src="js/datos.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        const grid = document.getElementById('contenedor-ciudades');
+        ciudadesChile.forEach(c => {
+            const esLluvia = c.estado.toLowerCase().includes('lluvia');
+            const mod = esLluvia ? 'rainy' : 'sunny';
+            
+            grid.innerHTML += `
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="place-card" onclick="location.href='detalle.html?id=${c.id}'">
+                        <h5 class="place-card__name">${c.nombre}</h5>
+                        <div class="place-card__temp">${c.temp}°C</div>
+                        <span class="place-card__status place-card__status--${mod}">
+                            ${c.estado}
+                        </span>
+                    </article>
+                </div>`;
+        });
+    </script>
 </body>
 </html>

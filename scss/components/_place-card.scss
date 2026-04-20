@@ -1,40 +1,38 @@
 .place-card {
-    background-color: $color-white;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    border: 1px solid #eee;
-    @include shadow-card; 
+  background-color: $color-white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.05);
+  @include card-shadow; // Uso del mixin
 
-    &:hover {
-        transform: translateY(-5px);
-    }
+  &:hover {
+    transform: translateY(-8px);
+  }
 
-    &__name {
-        font-weight: bold;
-        color: $color-primary;
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-    }
+  &__name {
+    font-weight: bold;
+    color: $color-primary;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+  }
 
-    &__temp {
-        font-size: 2.5rem;
-        color: $color-text-dark;
-        margin: 15px 0;
-    }
+  &__temp {
+    font-size: 2.8rem;
+    font-weight: 300;
+    margin: 1rem 0;
+    color: $color-text;
+  }
 
-    &__status {
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
+  &__status {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    background-color: lighten($color-primary, 50%);
+    color: $color-primary;
     
-    &--sunny {
-        border-top: 4px solid #ffc107;
-    }
-
-    &--rainy {
-        border-top: 4px solid #17a2b8;
-    }
+    // Modificadores
+    &--sunny { background-color: #fff3cd; color: #856404; }
+    &--rainy { background-color: #d1ecf1; color: #0c5460; }
+  }
 }

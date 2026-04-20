@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChileClima | Proyecto MVP</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { 
+            --azul-chile: #0039a6; 
+            --rojo-chile: #d52b1e; 
+        }
+        
+        body { 
+            background-color: #f0f2f5; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .navbar { 
+            background-color: var(--azul-chile) !important; 
+            border-bottom: 4px solid var(--rojo-chile); 
+        }
+
+        .card-clima { 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer;
+        }
+
+        .card-clima:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15) !important; 
+        }
+
+        .temp-display { 
+            font-size: 3rem; 
+            font-weight: 300; 
+            color: #222; 
+        }
+
+        footer { 
+            background: #333; 
+            color: white; 
+            padding: 1.5rem 0; 
+            margin-top: auto; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#">🌤️ ChileClima APP</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container my-5">
+        <header class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-dark">Clima Regional</h1>
+            <p class="lead text-muted">Selecciona una ciudad para ver el pronóstico extendido</p>
+        </header>
+
+        <section class="row g-4" id="grid-ciudades"></section>
+    </main>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-0 small">Desarrollo Frontend - Módulo 2</p>
+            <p class="mb-1 small">ChileClima App © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const ciudades = [
+            { id: 1, nombre: "Arica", region: "Arica y Parinacota", temp: 22, estado: "Despejado" },
+            { id: 2, nombre: "Iquique", region: "Tarapacá", temp: 20, estado: "Nublado" },
+            { id: 3, nombre: "Antofagasta", region: "Antofagasta", temp: 19, estado: "Despejado" },
+            { id: 4, nombre: "Copiapó", region: "Atacama", temp: 25, estado: "Despejado" },
+            { id: 5, nombre: "La Serena", region: "Coquimbo", temp: 18, estado: "Neblina" },
+            { id: 6, nombre: "Valparaíso", region: "Valparaíso", temp: 17, estado: "Parcial" },
+            { id: 7, nombre: "Santiago", region: "Metropolitana", temp: 28, estado: "Despejado" },
+            { id: 8, nombre: "Rancagua", region: "O'Higgins", temp: 26, estado: "Despejado" },
+            { id: 9, nombre: "Talca", region: "Maule", temp: 24, estado: "Nublado" },
+            { id: 10, nombre: "Chillán", region: "Ñuble", temp: 23, estado: "Despejado" },
+            { id: 11, nombre: "Concepción", region: "Biobío", temp: 16, estado: "Lluvia" },
+            { id: 12, nombre: "Temuco", region: "Araucanía", temp: 14, estado: "Lluvia" },
+            { id: 13, nombre: "Valdivia", region: "Los Ríos", temp: 12, estado: "Lluvia" },
+            { id: 14, nombre: "Puerto Montt", region: "Los Lagos", temp: 11, estado: "Nublado" },
+            { id: 15, nombre: "Punta Arenas", region: "Magallanes", temp: 5, estado: "Nieve" }
+        ];
+
+        const grid = document.getElementById('grid-ciudades');
+        let htmlContenido = ""; // Variable acumuladora
+
+        ciudades.forEach(c => {
+            // Generamos el HTML en la variable
+            htmlContenido += `
+                <div class="col-12 col-md-6 col-lg-4">
+                    <article class="card h-100 shadow-sm card-clima" onclick="irADetalle(${c.id})">
+                        <div class="card-body text-center p-4">
+                            <h5 class="fw-bold mb-1">${c.nombre}</h5>
+                            <p class="text-muted text-uppercase small mb-3">${c.region}</p>
+                            <div class="temp-display my-2">${c.temp}°C</div>
+                            <span class="badge bg-primary rounded-pill px-3 py-2">${c.estado}</span>
+                        </div>
+                    </article>
+                </div>
+            `;
+        });
+
+        // Hacemos una sola inserción al DOM (Más rápido y limpio)
+        grid.innerHTML = htmlContenido;
+
+        function irADetalle(id) {
+            // Asegurarse de que el archivo detalle.html exista
+            console.log("Navegando a la ciudad con ID:", id);
+            window.location.href = `detalle.html?id=${id}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chile Clima APP | Detalle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-primary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">☀️ Chile Clima APP</a>
+        </div>
+    </nav>
+
+    <main class="container py-4">
+        <div id="pantalla-detalle" class="row justify-content-center">
+            </div>
+    </main>
+
+    <footer class="text-center py-3 mt-auto bg-light border-top">
+        <p class="text-muted small mb-0">Chile Clima APP - Detalle Regional</p>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script>
+      
+        const parametros = new URLSearchParams(window.location.search);
+        const idSeleccionado = parseInt(parametros.get('id'));
+
+        const ciudad = ciudades.find(c => c.id === idSeleccionado);
+
+       
+        const contenedor = document.getElementById('pantalla-detalle');
+        if (ciudad) {
+            contenedor.innerHTML = `
+                <div class="col-md-8 col-lg-6">
+                    <div class="card p-4 shadow border-0 text-center">
+                        <div class="display-1 mb-3">${ciudad.icono}</div>
+                        <h1 class="fw-bold">${ciudad.nombre}</h1>
+                        <p class="lead text-secondary">${ciudad.estado} — ${ciudad.temp}°C</p>
+                        
+                        <div class="row bg-light rounded p-3 my-4 mx-1">
+                            <div class="col-6">
+                                <small class="d-block text-muted">HUMEDAD</small>
+                                <strong>${ciudad.humedad}</strong>
+                            </div>
+                            <div class="col-6">
+                                <small class="d-block text-muted">VIENTO</small>
+                                <strong>${ciudad.viento}</strong>
+                            </div>
+                        </div>
+
+                        <h5 class="mb-3">Pronóstico próximos días:</h5>
+                        <div class="d-flex justify-content-center gap-2 mb-4">
+                            ${ciudad.pronostico.map(t => `<span class="badge bg-primary fs-6">${t}°C</span>`).join('')}
+                        </div>
+
+                        <a href="index.html" class="btn btn-outline-primary px-4">Volver al inicio</a>
+                    </div>
+                </div>`;
+        }
+    </script>
+</body>
+</html>

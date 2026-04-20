@@ -1,0 +1,23 @@
+@import 'base/variables';
+@import 'layout/layout';
+@import 'components/place-card';
+
+
+body {
+    background-color: $color-background;
+    font-family: $font-family-base;
+    color: $color-text-dark;
+    margin: 0;
+}
+
+.weather-app {
+    &__header {
+        margin-bottom: 30px;
+    }
+    
+    &__footer {
+        padding: 40px 0;
+        background-color: #222;
+        color: $color-white;
+    }
+}

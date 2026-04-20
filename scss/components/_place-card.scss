@@ -1,0 +1,40 @@
+.place-card {
+    background-color: $color-white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #eee;
+    @include shadow-card; 
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    &__name {
+        font-weight: bold;
+        color: $color-primary;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    &__temp {
+        font-size: 2.5rem;
+        color: $color-text-dark;
+        margin: 15px 0;
+    }
+
+    &__status {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    
+    &--sunny {
+        border-top: 4px solid #ffc107;
+    }
+
+    &--rainy {
+        border-top: 4px solid #17a2b8;
+    }
+}

@@ -1,38 +1,31 @@
 .place-card {
-  background-color: $color-white;
-  border-radius: 12px;
-  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 2rem;
   text-align: center;
-  border: 1px solid rgba(0,0,0,0.05);
-  @include card-shadow; // Uso del mixin
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 
   &:hover {
-    transform: translateY(-8px);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
   }
 
   &__name {
+    color: #0039a6;
     font-weight: bold;
-    color: $color-primary;
-    text-transform: uppercase;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 
   &__temp {
-    font-size: 2.8rem;
-    font-weight: 300;
+    font-size: 3rem;
     margin: 1rem 0;
-    color: $color-text;
+    font-weight: 300;
   }
 
-  &__status {
-    font-size: 0.85rem;
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    background-color: lighten($color-primary, 50%);
-    color: $color-primary;
-    
-    // Modificadores
-    &--sunny { background-color: #fff3cd; color: #856404; }
-    &--rainy { background-color: #d1ecf1; color: #0c5460; }
-  }
+  // Modificadores BEM
+  &--sunny { border-top: 6px solid #ffc107; }
+  &--rainy { border-top: 6px solid #17a2b8; }
 }

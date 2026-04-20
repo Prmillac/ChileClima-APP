@@ -3,67 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chile Clima APP | Detalle de Ciudad</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <title>ChileClima | Detalle</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="bg-light">
-    <nav class="navbar navbar-dark bg-primary mb-4 shadow-sm">
+<body class="weather-app">
+    <nav class="navbar navbar-dark bg-dark mb-5">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">☀️ Chile Clima APP</a>
+            <a class="navbar-brand" href="index.html">← Volver al Inicio</a>
         </div>
     </nav>
 
-    <main class="container py-4">
-        <div id="pantalla-detalle" class="row justify-content-center">
+    <main class="container text-center">
+        <div id="detalle-ciudad" class="row justify-content-center">
             </div>
     </main>
 
-    <footer class="text-center py-3 mt-auto border-top">
-        <p class="text-muted small mb-0">Chile Clima APP - Proyecto Académico</p>
-    </footer>
-
     <script src="js/datos.js"></script>
-
     <script>
-        // Capturamos el ID de la URL
-        const parametros = new URLSearchParams(window.location.search);
-        const idSeleccionado = parseInt(parametros.get('id'));
-
-        // Buscamos la ciudad en el arreglo 'ciudades' que viene de datos.js
-        const ciudad = ciudades.find(c => c.id === idSeleccionado);
-
-        const contenedor = document.getElementById('pantalla-detalle');
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id'));
+        const ciudad = ciudadesChile.find(c => c.id === id);
+        const visor = document.getElementById('detalle-ciudad');
 
         if (ciudad) {
-            contenedor.innerHTML = `
-                <div class="col-md-8 col-lg-6">
-                    <div class="card p-4 shadow border-0 text-center">
-                        <div class="display-1 mb-3">${ciudad.icono}</div>
-                        <h1 class="fw-bold">${ciudad.nombre}</h1>
-                        <p class="lead text-secondary">${ciudad.estado} — ${ciudad.temp}°C</p>
-                        
-                        <div class="row bg-light rounded p-3 my-4 mx-1">
-                            <div class="col-6 border-end">
-                                <small class="d-block text-muted fw-bold">HUMEDAD</small>
-                                <span class="h5">${ciudad.humedad}</span>
-                            </div>
-                            <div class="col-6">
-                                <small class="d-block text-muted fw-bold">VIENTO</small>
-                                <span class="h5">${ciudad.viento}</span>
-                            </div>
-                        </div>
-
-                        <a href="index.html" class="btn btn-primary px-5 shadow-sm">Volver al inicio</a>
+            visor.innerHTML = `
+                <div class="col-md-8">
+                    <div class="card shadow p-5 border-0" style="border-radius: 20px;">
+                        <h1 class="display-3 fw-bold text-primary">${ciudad.nombre}</h1>
+                        <p class="h4 text-muted">${ciudad.region}</p>
+                        <hr>
+                        <div class="display-1 my-4">${ciudad.temp}°C</div>
+                        <h3><span class="badge badge-primary px-4 py-2">${ciudad.estado}</span></h3>
                     </div>
-                </div>`;
-        } else {
-            contenedor.innerHTML = `
-                <div class="alert alert-warning text-center shadow-sm">
-                    <h3>Ciudad no encontrada</h3>
-                    <p>No pudimos encontrar la información para esta ubicación.</p>
-                    <a href="index.html" class="btn btn-dark mt-3">Regresar al Inicio</a>
-                </div>`;
+                </div>
+            `;
         }
     </script>
 </body>

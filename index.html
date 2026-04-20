@@ -10,44 +10,54 @@
 <body class="weather-app">
 
     <header class="weather-app__header">
-        <nav class="navbar navbar-dark container">
-            <a class="navbar-brand fw-bold" href="index.html">🌤️ CHILECLIMA</a>
+        <nav class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="index.html">🌤️ CHILECLIMA MVP</a>
+            </div>
         </nav>
     </header>
 
     <main class="weather-app__content container">
-        <div class="text-center mb-5">
-            <h1 class="font-weight-bold">Estado del Tiempo</h1>
-            <p class="text-muted">Refactorización SASS + BEM</p>
-        </div>
+        <section class="text-center my-5">
+            <h1 class="display-4 fw-bold">Estado del Tiempo</h1>
+            <p class="lead text-muted">Refactorización SASS + Metodología BEM</p>
+        </section>
 
-        <div class="row" id="contenedor-ciudades"></div>
+        <div class="row" id="contenedor-ciudades">
+            </div>
     </main>
 
-    <footer class="weather-app__footer text-center">
+    <footer class="weather-app__footer text-center bg-dark text-white py-4 mt-auto">
         <div class="container">
             <p class="mb-0">Proyecto ChileClima - Módulo 3</p>
-            <small>Desarrollado por [Priscilla Milla Carreño] - 2026</small>
+            <p class="small mb-0">Desarrollado por Priscilla Milla Carreño - 2026</p>
         </div>
     </footer>
 
     <script src="js/datos.js"></script>
     <script>
-        const grid = document.getElementById('contenedor-ciudades');
-        ciudadesChile.forEach(c => {
-            const esLluvia = c.estado.toLowerCase().includes('lluvia');
-            const mod = esLluvia ? 'rainy' : 'sunny';
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('contenedor-ciudades');
             
-            grid.innerHTML += `
-                <div class="col-12 col-md-6 col-lg-4 mb-4">
-                    <article class="place-card" onclick="location.href='detalle.html?id=${c.id}'">
-                        <h5 class="place-card__name">${c.nombre}</h5>
-                        <div class="place-card__temp">${c.temp}°C</div>
-                        <span class="place-card__status place-card__status--${mod}">
-                            ${c.estado}
-                        </span>
-                    </article>
-                </div>`;
+            if (typeof ciudadesChile !== 'undefined') {
+                ciudadesChile.forEach(c => {
+                    
+                    const esLluvia = c.estado.toLowerCase().includes('lluvia') || c.estado.toLowerCase().includes('nieve');
+                    const modclima = esLluvia ? 'rainy' : 'sunny';
+                    
+                    grid.innerHTML += `
+                        <div class="col-12 col-md-6 col-lg-4 mb-4">
+                            <article class="place-card place-card--${modclima}" onclick="location.href='detalle.html?id=${c.id}'">
+                                <h5 class="place-card__name">${c.nombre}</h5>
+                                <div class="place-card__temp">${c.temp}°C</div>
+                                <span class="place-card__status">${c.estado}</span>
+                            </article>
+                        </div>
+                    `;
+                });
+            } else {
+                console.error("No se encontró el archivo js/datos.js");
+            }
         });
     </script>
 </body>

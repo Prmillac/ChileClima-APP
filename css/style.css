@@ -1,0 +1,42 @@
+body {
+    background-color: #f1f3f5; /* Un gris muy clarito para que resalten las tarjetas */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Diseño de las tarjetas de clima */
+.card {
+    border: none; /* Quitamos el borde aburrido de Bootstrap */
+    border-radius: 15px; /* Bordes redondeados y suaves */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra suave para dar profundidad */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animación suave */
+}
+
+/* Efecto cuando pasas el mouse por encima */
+.card:hover {
+    transform: translateY(-8px); /* La tarjeta sube un poquito */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* La sombra se vuelve más intensa */
+}
+
+/* Colores personalizados para los textos */
+.card-title {
+    color: #0039a6; /* Azul institucional */
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+
+.text-temp {
+    color: #d52b1e; /* Rojo para destacar la temperatura */
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+/* Botón personalizado */
+.btn-primary {
+    border-radius: 8px;
+    background-color: #0039a6;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #002b80;
+}

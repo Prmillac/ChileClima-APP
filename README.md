@@ -140,3 +140,37 @@ Al ser una SPA cargada vía CDN, solo es necesario abrir el archivo `index.html`
 ---
 **Desarrollado por:** Priscilla Milla Carreño - 2026
 
+
+
+# 🌤️ ChileClima APP - Módulo 7: Gestión de Usuarios y Estado Global
+
+## 📝 Descripción
+En esta fase final del proyecto, la App de Clima integra un sistema de **Autenticación** y **Personalización**. Se utiliza un estado global para permitir que diferentes partes de la aplicación (como el Navbar y la sección de Favoritos) reconozcan al usuario que ha iniciado sesión.
+
+## 🧠 Gestión de Estado (Vuex)
+Se ha implementado **Vuex 4** para centralizar la información de la aplicación:
+- **State:** Almacena el objeto `usuario` (nombre, email), el booleano `isAuthenticated` y el arreglo de `favoritos`.
+- **Mutations:** Funciones para modificar el estado (SET_USER, TOGGLE_FAVORITO).
+- **Actions:** Lógica para manejar el proceso de Login y Logout de forma asíncrona/simulada.
+
+## 🔐 Seguridad y Rutas
+La aplicación utiliza **Navigation Guards** de Vue Router para proteger la privacidad de los datos:
+- **/login:** Acceso público para autenticarse.
+- **/favoritos:** Ruta protegida. Si un usuario no autenticado intenta ingresar, es redirigido automáticamente al Login.
+- **Header Dinámico:** El menú de navegación cambia reactivamente mostrando el nombre del usuario y el botón de "Cerrar Sesión" solo cuando hay una sesión activa.
+
+## 🛠️ Tecnologías Aplicadas
+- **Vue.js 3:** Framework base.
+- **Vuex 4:** Manejo de estado global (Centralized State Management).
+- **Vue Router 4:** Manejo de rutas y guardias de seguridad (`beforeEach`).
+- **Bootstrap 4:** Interfaz de formularios y componentes responsivos.
+
+## 📁 Instrucciones de Uso
+1. Abrir `index.html` en el navegador.
+2. Ir a "Iniciar Sesión".
+3. **Credenciales de prueba:** - Usuario: (Cualquier nombre)
+   - Contraseña: `123`
+4. Una vez dentro, podrás acceder a la sección de "Mis Favoritos".
+
+---
+**Desarrollado por:** Priscilla Milla Carreño - 2026

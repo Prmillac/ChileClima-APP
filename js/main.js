@@ -1,27 +1,24 @@
-const contenedor = document.getElementById('contenedor-ciudades');
+function generarResumen(pronostico) {
+    let diasSoleados = 0;
+    let diasLluviosos = 0;
 
-function renderizarApp() {
+    for (let i = 0; i < pronostico.length; i++) {
+        if (pronostico[i].estado === "Soleado") {
+            diasSoleados++;
+        } else if (pronostico[i].estado === "Lluvioso") {
+            diasLluviosos++;
+        }
+    }
+
     
-    ciudades.forEach(ciudad => {
-        const tarjeta = `
-            <div class="col">
-                <div class="card h-100 shadow-sm text-center p-3">
-                    <div class="display-3">${ciudad.icono}</div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">${ciudad.nombre}</h5>
-                        <p class="card-text text-muted mb-1">${ciudad.estado}</p>
-                        <h3 class="text-primary">${ciudad.temp}°C</h3>
-                        <a href="detalle.html?id=${ciudad.id}" class="btn btn-outline-primary w-100 mt-2">
-                            Ver Detalles
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-        contenedor.innerHTML += tarjeta;
-    });
+    let mensaje = "";
+    if (diasSoleados >= 4) {
+        mensaje = "Semana ideal para actividades al aire libre, mayormente soleada.";
+    } else if (diasLluviosos >= 2) {
+        mensaje = "Atención: Semana con alta probabilidad de lluvias, lleva paraguas.";
+    } else {
+        mensaje = "Semana con clima variado, se recomienda revisar el reporte diario.";
+    }
+
+    return mensaje;
 }
-
-
-renderizarApp();
-

@@ -63,3 +63,29 @@ El proyecto ahora cuenta con una arquitectura de carpetas para los estilos:
 ---
 ## 🔗 Repositorio del Proyecto
 https://github.com/Prmillac/ChileClima-APP
+
+
+# 🌤️ ChileClima APP - Módulo 4
+
+## 📝 Descripción
+Esta aplicación permite visualizar el clima de 5 ciudades estratégicas de Chile. En esta etapa, el proyecto se enfoca en la **lógica de programación**, procesando datos dinámicos para ofrecer estadísticas precisas a los usuarios.
+
+## 📊 Estadísticas Calculadas
+A diferencia de versiones anteriores, los datos ya no son estáticos. La aplicación utiliza **JavaScript** para calcular automáticamente:
+* **Temperatura Promedio:** Calculada sumando las máximas de la semana y dividiendo por el total de días.
+* **Mínimas y Máximas Absolutas:** Identificadas mediante ciclos que recorren el pronóstico.
+* **Resumen Dinámico:** Un mensaje textual que cambia según las condiciones climáticas (Soleado, Lluvioso o Variado).
+
+## 🛠️ Tecnologías y Lógica Utilizada
+* **Ciclos (For):** Para recorrer los arreglos de objetos en `datos.js`.
+* **Condicionales (If/Else):** Para determinar las alertas de clima y buscar temperaturas extremas.
+* **DOM Manipulation:** Para inyectar los resultados de los cálculos directamente en el HTML.
+
+## 📁 Estructura de Datos
+Los datos están modelados como un arreglo de objetos llamado `lugares`, donde cada ciudad contiene un sub-arreglo `pronosticoSemanal` con la siguiente estructura:
+- `dia`, `min`, `max`, `estado`.
+
+---
+**Desarrollado por:** P. Millac  
+**Módulo:** 4 - Lógica y Estadísticas en JavaScript
+

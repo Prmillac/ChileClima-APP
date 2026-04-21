@@ -89,3 +89,31 @@ Los datos están modelados como un arreglo de objetos llamado `lugares`, donde c
 **Desarrollado por:** P. Millac  
 **Módulo:** 4 - Lógica y Estadísticas en JavaScript
 
+# 🌤️ ChileClima APP - Módulo 5: POO, ES6 y API
+
+## 📝 Descripción
+Esta aplicación ha sido refactorizada para cumplir con los estándares de **Programación Orientada a Objetos (POO)**. Los datos climáticos ya no son estáticos, sino que se obtienen en tiempo real mediante el consumo de una API externa, procesando la información de forma asíncrona.
+
+## 🏛️ Arquitectura del Proyecto
+- **Clase WeatherApp (`js/WeatherApp.js`):** Actúa como el modelo de datos y controlador de peticiones. Gestiona las coordenadas de las ciudades chilenas y la conexión con el servidor.
+- **Lógica de Renderizado (`js/main.js`):** Instancia la clase principal y utiliza métodos de arreglos modernos para transformar los datos JSON en elementos visuales del DOM.
+
+## 🌐 API Utilizada
+- **Nombre:** Open-Meteo API.
+- **URL Base:** `https://api.open-meteo.com/v1/forecast`
+- **Funcionalidad:** Se consultan datos actuales y pronósticos diarios basados en latitud y longitud.
+
+## 📊 Estadísticas y Alertas
+El sistema incluye un método `generarResumenAPI` que analiza los códigos climáticos de la semana:
+- **Alerta de Sol:** Si hay ≥ 4 días despejados.
+- **Alerta de Lluvia:** Si hay ≥ 2 días con códigos de precipitación.
+- **Cálculos:** Se procesan promedios y estados mediante métodos de ES6 como `.forEach()`.
+
+## 🛠️ Tecnologías
+- **ES6+:** Uso de `const`, `let`, `Arrow Functions`, `Template Literals` y `Async/Await`.
+- **Bootstrap 4:** Layout responsivo y componentes de interfaz.
+- **Git/GitHub:** Control de versiones con commits descriptivos.
+
+---
+**Desarrollado por:** Priscilla Milla Carreño - 2026
+

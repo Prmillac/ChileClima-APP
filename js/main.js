@@ -1,96 +1,95 @@
 const store = Vuex.createStore({
     state() {
         return {
-            usuario: null,
-            isAuthenticated: false,
-            favoritos: [] // Aquí guardaremos los IDs de las ciudades favoritas
+            ciudades: new WeatherApp().ciudades,
+            favoritos: [],
+            unidad: 'C'
         }
     },
     mutations: {
-        SET_USER(state, payload) {
-            state.usuario = payload;
-            state.isAuthenticated = !!payload;
-        },
-        TOGGLE_FAVORITO(state, ciudadId) {
-            const index = state.favoritos.indexOf(ciudadId);
+        TOGGLE_FAVORITO(state, id) {
+            const index = state.favoritos.indexOf(id);
             if (index > -1) state.favoritos.splice(index, 1);
-            else state.favoritos.push(ciudadId);
-        }
-    },
-    actions: {
-        login({ commit }, datosUsuario) {
-            // Simulamos una API: Si la pass es "123", entra
-            if (datosUsuario.pass === "123") {
-                commit('SET_USER', { nombre: datosUsuario.user, email: datosUsuario.user + "@gmail.com" });
-                return true;
-            }
-            return false;
-        },
-        logout({ commit }) {
-            commit('SET_USER', null);
+            else state.favoritos.push(id);
         }
     }
 });
 
 
-const Login = {
+const Home = {
     template: `
-        <div class="row justify-content-center">
-            <div class="col-md-4 card p-4 shadow">
-                <h3 class="text-center">Iniciar Sesión</h3>
-                <form @submit.prevent="hacerLogin">
-                    <div class="form-group">
-                        <label>Usuario (usa tu nombre)</label>
-                        <input v-model="form.user" type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Contraseña (usa 123)</label>
-                        <input v-model="form.pass" type="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-                    <p v-if="error" class="text-danger mt-2 text-center">{{ error }}</p>
-                </form>
+        <section>
+            <div class="jumbotron text-center bg-white shadow-sm">
+                <h1 class="display-4">¿Cómo está el clima hoy?</h1>
+                <input v-model="buscar" type="text" class="form-control form-control-lg w-50 mx-auto mt-4" placeholder="Buscar ciudad en Chile...">
             </div>
-        </div>
+            <div class="row">
+                <div v-for="ciudad in filtradas" :key="ciudad.id" class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0 place-card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ciudad.nombre }}</h5>
+                            <button @click="verDetalle(ciudad.id)" class="btn btn-outline-primary btn-sm">Ver Pronóstico</button>
+                            <button @click="toggleFav(ciudad.id)" class="btn btn-link text-danger">
+                                {{ esFav(ciudad.id) ? '❤️' : '🤍' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     `,
-    data() { return { form: { user: '', pass: '' }, error: '' } },
-    methods: {
-        async hacerLogin() {
-            const exito = await this.$store.dispatch('login', this.form);
-            if (exito) this.$router.push('/');
-            else this.error = "Credenciales incorrectas (tip: usa 123)";
+    data() { return { buscar: '' } },
+    computed: {
+        filtradas() {
+            return this.$store.state.ciudades.filter(c => c.nombre.toLowerCase().includes(this.buscar.toLowerCase()));
         }
+    },
+    methods: {
+        verDetalle(id) { this.$router.push('/lugar/' + id); },
+        toggleFav(id) { this.$store.commit('TOGGLE_FAVORITO', id); },
+        esFav(id) { return this.$store.state.favoritos.includes(id); }
     }
 };
 
 
-const Favoritos = {
+const Detalle = {
     template: `
-        <div>
-            <h2>Mis Ciudades Favoritas ❤️</h2>
-            <div v-if="favs.length === 0" class="alert alert-warning">No tienes favoritos aún.</div>
-            <div class="row" v-else>
-                <div v-for="ciudad in favs" :key="ciudad.id" class="col-md-4 mb-3">
-                    <div class="card p-3 border-info">
-                        <h5>{{ ciudad.nombre }}</h5>
-                        <router-link :to="'/lugar/' + ciudad.id">Ver Clima</router-link>
+        <div v-if="ciudad">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent p-0">
+                    <li class="breadcrumb-item"><router-link to="/">Chile</router-link></li>
+                    <li class="breadcrumb-item active">{{ ciudad.nombre }}</li>
+                </ol>
+            </nav>
+            <div class="card shadow border-0 p-4">
+                <h2>{{ ciudad.nombre }}</h2>
+                <p class="text-muted">Lat: {{ ciudad.lat }} | Lon: {{ ciudad.lon }}</p>
+                <div class="alert alert-warning" v-if="alerta">⚠️ Aviso: Se esperan temperaturas extremas en la zona.</div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h4>Estadísticas Semanales</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Promedio: 18°C</li>
+                            <li class="list-group-item">Máxima: 24°C</li>
+                            <li class="list-group-item">Mínima: 12°C</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     `,
-    computed: {
-        favs() {
-            const all = new WeatherApp().ciudades;
-            return all.filter(c => this.$store.state.favoritos.includes(c.id));
-        }
+    data() { return { ciudad: null, alerta: true } },
+    created() {
+        const id = this.$route.params.id;
+        this.ciudad = this.$store.state.ciudades.find(c => c.id == id);
     }
 };
 
+
 const routes = [
-    { path: '/', component: { template: '<div><h1>Bienvenido a ChileClima</h1><p>Inicia sesión para ver tus favoritos.</p></div>' } },
-    { path: '/login', component: Login },
-    { path: '/favoritos', component: Favoritos, meta: { requiereAuth: true } }
+    { path: '/', component: Home },
+    { path: '/lugar/:id', component: Detalle },
+    { path: '/favoritos', component: { template: '<h2 class="text-center">Tus ciudades favoritas aparecerán aquí.</h2>' } }
 ];
 
 const router = VueRouter.createRouter({
@@ -98,28 +97,8 @@ const router = VueRouter.createRouter({
     routes
 });
 
-
-router.beforeEach((to, from, next) => {
-    if (to.meta.requiereAuth && !store.state.isAuthenticated) {
-        next('/login');
-    } else {
-        next();
-    }
-});
-
-
-const app = Vue.createApp({
-    computed: {
-        estaAutenticado() { return this.$store.state.isAuthenticated },
-        usuario() { return this.$store.state.usuario }
-    },
-    methods: {
-        salir() { 
-            this.$store.dispatch('logout');
-            this.$router.push('/login');
-        }
-    }
-});
+// 5. APP INIT
+const app = Vue.createApp({});
 app.use(store);
 app.use(router);
 app.mount('#app');

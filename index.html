@@ -3,26 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChileClima | Usuarios y Vuex</title>
+    <title>ChileClima PRO | Portafolio Final</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://unpkg.com/vue-router@4"></script>
-    <script src="https://unpkg.com/vuex@4"></script> </head>
+    <script src="https://unpkg.com/vuex@4"></script>
+</head>
 <body class="weather-app">
     <div id="app">
-        <header class="weather-app__header">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <header class="weather-app__header sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
                 <div class="container">
-                    <router-link to="/" class="navbar-brand">🌤️ ChileClima</router-link>
+                    <router-link to="/" class="navbar-brand">🌤️ CHILECLIMA PRO</router-link>
                     <div class="navbar-nav ml-auto">
-                        <router-link v-if="!estaAutenticado" to="/login" class="nav-link">Iniciar Sesión</router-link>
-                        
-                        <template v-else>
-                            <span class="nav-item nav-link text-info">Hola, {{ usuario.nombre }}</span>
-                            <router-link to="/favoritos" class="nav-link">Mis Favoritos</router-link>
-                            <a href="#" @click.prevent="salir" class="nav-link text-danger">Cerrar Sesión</a>
-                        </template>
+                        <router-link to="/" class="nav-link">Inicio</router-link>
+                        <router-link to="/favoritos" class="nav-link">⭐ Favoritos</router-link>
                     </div>
                 </div>
             </nav>
@@ -31,6 +27,13 @@
         <main class="container my-5">
             <router-view></router-view>
         </main>
+
+        <footer class="footer mt-auto py-4 bg-light text-center border-top">
+            <div class="container">
+                <span class="text-muted">© 2026 ChileClima MVP - Proyecto Final Portafolio</span><br>
+                <strong>Desarrollado por Priscilla Milla Carreño</strong>
+            </div>
+        </footer>
     </div>
 
     <script src="js/WeatherApp.js"></script>

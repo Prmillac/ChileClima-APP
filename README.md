@@ -174,3 +174,37 @@ La aplicación utiliza **Navigation Guards** de Vue Router para proteger la priv
 
 ---
 **Desarrollado por:** Priscilla Milla Carreño - 2026
+
+
+# 🌤️ ChileClima - Full Responsive Weather SPA
+
+¡Bienvenido a mi proyecto final de Portafolio! **ChileClima** es una aplicación de una sola página (SPA) que consume datos meteorológicos en tiempo real para 15 ciudades de Chile, ofreciendo estadísticas avanzadas y alertas climáticas.
+
+## 🚀 Funcionalidades Clave
+- **Consumo de API Real:** Integración con Open-Meteo para obtener datos precisos.
+- **Estado Global (Vuex):** Manejo centralizado de preferencias de usuario (Unidades °C/°F) y datos climáticos.
+- **Estadísticas Dinámicas:** Cálculo automático de Temperaturas Mínimas, Máximas y Promedios semanales.
+- **Sistema de Alertas:** Generación de avisos automáticos ante eventos climáticos (ej: Olas de calor).
+- **Diseño Responsivo:** Optimizado para móviles y escritorio usando Bootstrap y Metodología BEM.
+
+## 🛠️ Stack Tecnológico
+- **Vue.js 3** (Framework principal)
+- **Vue Router 4** (Navegación SPA)
+- **Vuex 4** (Gestión de estado)
+- **SASS & BEM** (Estilos mantenibles)
+- **Fetch API** (Comunicación con Open-Meteo)
+
+## 📁 Instrucciones para Ejecución Local
+Para visualizar este proyecto en tu computadora:
+1. Clona el repositorio: `git clone https://github.com/Prmillac/ChileClima-APP.git`
+2. Navega a la carpeta del proyecto.
+3. Abre el archivo `index.html` en tu navegador favorito.
+*(No requiere comandos de instalación npm al usar versión CDN para máxima portabilidad)*.
+
+## 🗺️ Rutas de la App
+- `/`: Home con grilla de ciudades y buscador.
+- `/lugar/:id`: Vista de detalle con pronóstico extendido y estadísticas.
+- `/favoritos`: Panel personalizado de ciudades guardadas.
+
+---
+**Priscilla Milla Carreño** - Estudiante de Desarrollo Web

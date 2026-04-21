@@ -1,60 +1,101 @@
-const app = new WeatherApp();
+const weatherService = new WeatherApp();
 
 
-const generarResumenAPI = (pronosticoCodigos) => {
-    let diasSoleados = 0;
-    let diasLluviosos = 0;
+const Home = {
+    template: `
+        <section class="weather-app__home">
+            <div class="search-container mb-5 text-center">
+                <h2 class="mb-3">Busca tu ciudad</h2>
+                <input v-model="busqueda" type="text" class="form-control w-50 mx-auto" placeholder="Ej: Santiago, Valparaíso...">
+            </div>
 
-    pronosticoCodigos.forEach(codigo => {
-        if (codigo === 0) diasSoleados++; // 0 es despejado en Open-Meteo
-        if (codigo > 50) diasLluviosos++; // Códigos mayores a 50 son lluvia
-    });
-
-    if (diasSoleados >= 4) return "☀️ Semana ideal para actividades al aire libre.";
-    if (diasLluviosos >= 2) return "☔ Atención: Alta probabilidad de lluvias.";
-    return "☁️ Semana con clima variado.";
-};
-
-
-const cargarHome = async () => {
-    const grid = document.getElementById('contenedor-ciudades');
-    if (!grid) return;
-
-    grid.innerHTML = '<div class="col-12 text-center"><p>Cargando clima real...</p></div>';
-
-    let htmlFinal = "";
-
-    
-    for (const ciudad of app.ciudades) {
-        try {
-           
-            const datos = await app.obtenerClima(ciudad.lat, ciudad.lon);
+            <div class="row" v-if="ciudadesFiltradas.length > 0">
+                <div v-for="ciudad in ciudadesFiltradas" :key="ciudad.id" class="col-12 col-md-6 col-lg-4 mb-4">
+                    <article class="place-card shadow-sm h-100" @click="irADetalle(ciudad.id)" style="cursor:pointer">
+                        <h5 class="place-card__name">{{ ciudad.nombre }}</h5>
+                        <p class="text-muted">Presiona para ver el pronóstico real</p>
+                        <div class="text-right">
+                            <span class="badge badge-primary">Ver más →</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
             
-            if (datos) {
-                
-                const alerta = generarResumenAPI(datos.daily.weathercode);
-                
-            
-                const esLluvia = datos.current_weather.weathercode > 50;
-                const modClima = esLluvia ? 'rainy' : 'sunny';
-
-                htmlFinal += `
-                    <div class="col-12 col-md-6 col-lg-4 mb-4">
-                        <article class="place-card place-card--${modClima}" onclick="alert('${alerta}')" style="cursor:pointer">
-                            <h5 class="place-card__name">${ciudad.nombre}</h5>
-                            <div class="place-card__temp">${datos.current_weather.temperature}°C</div>
-                            <span class="place-card__status">Viento: ${datos.current_weather.windspeed} km/h</span>
-                            <hr>
-                            <small class="d-block text-center text-white">${alerta}</small>
-                        </article>
-                    </div>
-                `;
-            }
-        } catch (error) {
-            console.error("Error con la ciudad " + ciudad.nombre, error);
+            <div v-else class="text-center my-5">
+                <p class="lead">No encontramos ciudades que coincidan con "{{ busqueda }}"</p>
+            </div>
+        </section>
+    `,
+    data() {
+        return {
+            busqueda: '',
+            ciudades: weatherService.ciudades // Traemos tus 15 ciudades
+        }
+    },
+    computed: {
+        
+        ciudadesFiltradas() {
+            return this.ciudades.filter(c => 
+                c.nombre.toLowerCase().includes(this.busqueda.toLowerCase())
+            );
+        }
+    },
+    methods: {
+        irADetalle(id) {
+            // Navegación programática con Vue Router
+            this.$router.push(`/lugar/${id}`);
         }
     }
-    grid.innerHTML = htmlFinal;
 };
 
-document.addEventListener('DOMContentLoaded', cargarHome);
+
+const Detalle = {
+    template: `
+        <div class="weather-app__detail" v-if="ciudad">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><router-link to="/">Inicio</router-link></li>
+                    <li class="breadcrumb-item active">{{ ciudad.nombre }}</li>
+                </ol>
+            </nav>
+
+            <div class="card p-4 shadow-lg border-0">
+                <h2 class="display-4">{{ ciudad.nombre }}</h2>
+                <hr>
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="lead">Coordenadas: {{ ciudad.lat }}, {{ ciudad.lon }}</p>
+                        <p>Aquí se cargarán los datos de la API de Open-Meteo usando la lógica del Módulo 5.</p>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <button @click="$router.push('/')" class="btn btn-dark">Volver al listado</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `,
+    data() {
+        return { ciudad: null }
+    },
+    created() {
+        // Obtenemos el ID de la URL
+        const id = this.$route.params.id;
+        this.ciudad = weatherService.ciudades.find(c => c.id == id);
+    }
+};
+
+
+const routes = [
+    { path: '/', component: Home },
+    { path: '/lugar/:id', component: Detalle }
+];
+
+const router = VueRouter.createRouter({
+    history: VueRouter.createWebHashHistory(), 
+    routes
+});
+
+
+const app = Vue.createApp({});
+app.use(router);
+app.mount('#app');

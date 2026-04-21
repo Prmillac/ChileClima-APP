@@ -3,62 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChileClima | Módulo 3</title>
+    <title>ChileClima | Módulo 5 - POO & API</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
-<body class="weather-app">
+<body class="weather-app d-flex flex-column min-vh-100">
 
     <header class="weather-app__header">
         <nav class="navbar navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand fw-bold" href="index.html">🌤️ CHILECLIMA MVP</a>
+                <a class="navbar-brand fw-bold" href="index.html">🌤️ CHILECLIMA MVP - M5</a>
             </div>
         </nav>
     </header>
 
     <main class="weather-app__content container">
         <section class="text-center my-5">
-            <h1 class="display-4 fw-bold">Estado del Tiempo</h1>
-            <p class="lead text-muted">Refactorización SASS + Metodología BEM</p>
+            <h1 class="display-4 fw-bold">Estado del Tiempo Real</h1>
+            <p class="lead text-muted">Consumo de API Open-Meteo mediante Programación Orientada a Objetos</p>
         </section>
 
         <div class="row" id="contenedor-ciudades">
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+                <p class="mt-2">Conectando con el satélite...</p>
             </div>
+        </div>
     </main>
 
     <footer class="weather-app__footer text-center bg-dark text-white py-4 mt-auto">
         <div class="container">
-            <p class="mb-0">Proyecto ChileClima - Módulo 3</p>
+            <p class="mb-0">Proyecto ChileClima - Módulo 5</p>
             <p class="small mb-0">Desarrollado por Priscilla Milla Carreño - 2026</p>
         </div>
     </footer>
 
-    <script src="js/datos.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const grid = document.getElementById('contenedor-ciudades');
-            
-            if (typeof ciudadesChile !== 'undefined') {
-                ciudadesChile.forEach(c => {
-                    
-                    const esLluvia = c.estado.toLowerCase().includes('lluvia') || c.estado.toLowerCase().includes('nieve');
-                    const modclima = esLluvia ? 'rainy' : 'sunny';
-                    
-                    grid.innerHTML += `
-                        <div class="col-12 col-md-6 col-lg-4 mb-4">
-                            <article class="place-card place-card--${modclima}" onclick="location.href='detalle.html?id=${c.id}'">
-                                <h5 class="place-card__name">${c.nombre}</h5>
-                                <div class="place-card__temp">${c.temp}°C</div>
-                                <span class="place-card__status">${c.estado}</span>
-                            </article>
-                        </div>
-                    `;
-                });
-            } else {
-                console.error("No se encontró el archivo js/datos.js");
-            }
-        });
-    </script>
+    <script src="js/WeatherApp.js"></script>
+
+    <script src="js/main.js"></script>
+
 </body>
 </html>
